@@ -1,0 +1,164 @@
+// $mycolor: #005dff;
+
+// body {
+//     background-color: $mycolor;
+// }
+
+$colors: (
+    primary: #005dff,
+    primary-light: lighten(#005dff, 40%),
+    primary-dark: darken(#005dff, 40%),
+    accent: #fff6bb
+);
+
+$padding: 15px;
+
+$radius: 15px;
+
+@function color($color-name) {
+    @return map-get($colors, $color-name)
+}
+
+$desktop: 840px;
+
+@mixin desktop {
+    @media screen and (min-width: #{$desktop}) {
+        @content;
+    }
+}
+
+body, html {
+    height: 100%;
+}
+
+body {
+    font-family: "sans-serif";
+    margin: 0;
+    //background-color: map-get($colors, primary );
+    #bg {
+        width: 100%;
+        height: 100%;
+        clip-path: polygon(100% 0, 100% 54%, 65% 100%, 0 100%, 0 0);
+        background-color: color(primary);
+
+        position: absolute;
+        z-index: -1;
+
+        @include desktop {
+            clip-path: polygon(0 0, 81% 0, 53% 100%, 0% 100%);
+        }
+    }
+
+    header a {
+        color: #ffffff;
+        text-decoration: none;
+        padding: $padding;
+
+        display: block;
+    }
+}
+
+main {
+    @include desktop {
+        display: grid;
+        grid-template-columns: 50% auto;
+        grid-template-areas: "primary card";
+    }
+
+    section#card {
+        width: 80%;
+        background-color: #ffffff;
+        padding: 20px;
+        margin: 1em auto;
+        border-radius: $radius;
+        box-shadow: 6px 6px 10px rgba(0, 0, 0, .2);
+
+        //grid-area: card; we can use it right here as well
+
+        @include desktop {
+            grid-area: card;
+
+            height: fit-content;
+            align-self: center;
+            margin: 1em;
+        }
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            margin-bottom: 10px;
+
+            span {
+                position: absolute;
+
+                width: 30px;
+                height: 30px;
+                margin-right: 10px;
+                background-color: color(primary-light);
+                border-radius: 50%;
+            }
+
+            strong {
+                display: inline-block;
+
+                margin-left: max(40px);
+                margin-top: 10px;
+            }
+        }
+    }
+
+    section#primary {
+        color: #ffffff;
+        padding: $padding;
+        text-align: center;
+
+        //grid-area: primary; we can use it right here as well
+
+        @include desktop {
+            grid-area: primary;
+
+            text-align: left;
+            margin: 4em 0 0 4em;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-top: 10px;
+            text-transform: uppercase;
+
+            @include desktop {
+                width: 30%;
+                font-size: 4em;
+                line-height: .9em;
+            }
+        }
+
+        p {
+            font-size: 1.4em;
+        }
+
+        a {
+            margin: 50px auto 0 auto;
+            padding: $padding;
+            border-radius: $radius;
+            background-color: color(accent);
+            color: color(primary-dark);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+
+            display: block;
+
+            @include desktop {
+                display: inline-block;
+
+                padding: $padding $padding*4;
+            }
+        }
+    }
+}
